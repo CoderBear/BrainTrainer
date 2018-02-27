@@ -20,10 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Integer> answers = new ArrayList<>();
 
-    int a, b, score = 0, numberOfQuestions = 0;
+    int score = 0, numberOfQuestions = 0;
     int locationOfCorrectAnswer;
-
-    Random rand;
 
     public void start(View view) {
         startButton.setVisibility(View.INVISIBLE);
@@ -69,19 +67,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 resultTextView.setText("Done!");
-                resultTextView.setVisibility(View.VISIBLE);
                 playAgainButton.setVisibility(View.VISIBLE);
             }
         }.start();
     }
 
     public void newQuestion() {
-        rand = new Random();
+        Random rand = new Random();
 
-        resultTextView.setVisibility(View.INVISIBLE);
+        resultTextView.setText("");
 
-        a = rand.nextInt(21);
-        b = rand.nextInt(21);
+        int a = rand.nextInt(21);
+        int b = rand.nextInt(21);
+        int correctAnswer = a+b;
 
         String msg = Integer.toString(a) + " + " + Integer.toString(b);
         sumTextView.setText(msg);
@@ -92,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < 4; i++) {
             if(locationOfCorrectAnswer == i)
-                answers.add(a+b);
+                answers.add(correctAnswer);
             else {
                 int wrongAnswer = rand.nextInt(41);
-                while(wrongAnswer == (a+b)) {
+                while(wrongAnswer == correctAnswer) {
                     wrongAnswer = rand.nextInt(41);
                 }
                 answers.add(wrongAnswer);
@@ -134,5 +132,6 @@ public class MainActivity extends AppCompatActivity {
         gameLayout = findViewById(R.id.gameLayout);
 
         playAgainButton.setVisibility(View.INVISIBLE);
+        gameLayout.setVisibility(View.INVISIBLE);
     }
 }
